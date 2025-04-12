@@ -1,0 +1,74 @@
+
+.titulo  {
+  font-family: "Honk", system-ui;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "MORF" 15,
+    "SHLN" 50;
+}
+
+h1{
+    text-align:center;  
+}
+.formularios {
+  display: flex;
+  gap: 40px; 
+  justify-content: center;
+  align-items: flex-start;
+}
+.formulario-login{
+  flex-direction: column;
+}
+.formulario-registro{
+  flex-direction: column;
+}
+
+.hilos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; 
+  margin-top: 40px;
+}
+
+.hilo {
+  width: 220px;
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin: 10px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hilo img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+
+  section {
+    border: 1px solid grey;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+  }
+
+  label {
+    display: block;
+    margin-top: 10px;
+  }
+
+  input {
+    width: 100%;
+    padding: 5px;
+  }
+
+  button {
+    margin-top: 15px;
+    padding: 8px 12px;
+    color:white;
+    background-color: rgb(218, 51, 163);
+  }
