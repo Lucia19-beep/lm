@@ -29,16 +29,10 @@ if (isset($_POST['registro'])) {
                     $stmt->bindParam(":email", $emailRegistro);
                     $stmt->bindParam(":contrasenya", $hash);
                     $stmt->bindParam(":foto", $rutaFinal);
-                    
-                    // Si la consulta se ejecuta correctamente, redirige al usuario a la página de inicio
-                    if($stmt->execute()){
-                        header("Location: index.php");
-                        echo "Registro exitoso.";
-                    } else {
-                        echo "Error al registrar el usuario.";
-                    }
 
-                    
+                    $stmt->execute();
+
+                    echo "Registro exitoso.";
                 } catch (PDOException $e) {
                     echo " Error al registrar: " . $e->getMessage();
                 }

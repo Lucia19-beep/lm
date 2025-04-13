@@ -17,9 +17,8 @@ if (isset($_POST['login'])) {
 
         if ($usuario && password_verify($contrasenyaInicioSesion, $usuario['contrasenya'])) {
             // Inicio de sesión exitoso
-            $_SESSION['usuario'] = $usuario;
-            $_SESSION['token'] = bin2hex(random_bytes(16));
             $_SESSION['id_usuario'] = $usuario['id'];
+            $_SESSION['token'] = bin2hex(random_bytes(16));
             echo "Inicio de sesión exitoso.<br>";
             header("Location:user.php");
             exit;

@@ -10,7 +10,7 @@
 }
 
 h1{
-    text-align:center;
+    text-align:center;  
 }
 .formularios {
   display: flex;
@@ -72,4 +72,3 @@ h1{
     color:white;
     background-color: rgb(218, 51, 163);
   }
-

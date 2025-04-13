@@ -2,24 +2,36 @@
 session_start();
 require_once 'conectar_db.inc.php';
 
-$data = json_decode(file_get_contents('php://input'), true);
+$titulo = htmlspecialchars($_POST['titulo']);
+$descripcion = htmlspecialchars($_POST['descripcion']);
+$id_usuario = $_SESSION['id_usuario'];
 
-// Obtener los datos del formulario para crear un nuevo hilo
-$titulo = htmlspecialchars($data['titulo']);
-$descripcion = htmlspecialchars($data['descripcion']);
-$usuario_id = $_SESSION['usuario_id'];
+// Procesar la imagen
+$nombreArchivo = $_FILES['ruta_foto_hilo']['name'];
+$rutaTemporal = $_FILES['ruta_foto_hilo']['tmp_name'];
+$carpetaDestino = 'img/';
 
-$query = "INSERT INTO hilos (titulo, descripcion, usuario_id, fecha_creacion) VALUES (:titulo, :descripcion, :usuario_id, NOW())";
+$rutaFinal = $carpetaDestino . basename($nombreArchivo);
 
-$stmt = $conn->prepare($query);
-$stmt->bindParam(':titulo', $titulo, PDO::PARAM_STR);
-$stmt->bindParam(':descripcion', $descripcion, PDO::PARAM_STR);
-$stmt->bindParam(':usuario_id', $usuario_id, PDO::PARAM_INT);
+// Mover la imagen al destino
+if (move_uploaded_file($rutaTemporal, $rutaFinal)) {
+    // Guardar el hilo con la ruta de la imagen
+    $query = "INSERT INTO hilos (titulo, descripcion, ruta_foto_hilo, id_usuario, creado)
+              VALUES (:titulo, :descripcion, :ruta_foto_hilo, :id_usuario, NOW())";
 
-try {
-    $stmt->execute();
-    echo json_encode(['exito' => true, 'mensaje' => 'Hilo creado exitosamente']);
-} catch (PDOException $e) {
-    echo json_encode(['exito' => false, 'mensaje' => 'Error al crear hilo: ' . $e->getMessage()]);
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':titulo', $titulo, PDO::PARAM_STR);
+    $stmt->bindParam(':descripcion', $descripcion, PDO::PARAM_STR);
+    $stmt->bindParam(':ruta_foto_hilo', $rutaFinal, PDO::PARAM_STR);
+    $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+
+    try {
+        $stmt->execute();
+        echo json_encode(['exito' => true, 'mensaje' => 'Hilo creado exitosamente']);
+    } catch (PDOException $e) {
+        echo json_encode(['exito' => false, 'mensaje' => 'Error al crear hilo: ' . $e->getMessage()]);
+    }
+} else {
+    echo json_encode(['exito' => false, 'mensaje' => 'Error al subir la imagen']);
 }
 ?>

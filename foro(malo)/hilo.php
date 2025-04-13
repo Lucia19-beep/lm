@@ -18,8 +18,7 @@ if ($idHilo > 0) {
             echo '<h2>' . htmlspecialchars($hilo['titulo']) . '</h2>';
             echo '<p>' . htmlspecialchars($hilo['descripcion']) . '</p>';
 
-            // aquí te faltaba añadir _perfil a la ruta de la foto de perfil
-            $consultaComentarios = "SELECT u.ruta_foto_perfil AS foto_perfil, u.nombre, c.texto 
+            $consultaComentarios = "SELECT u.ruta_foto AS foto_perfil, u.nombre, c.texto 
                                     FROM comentarios c 
                                     JOIN usuarios u ON c.id_usuario = u.id 
                                     WHERE c.id_hilo = :idHilo 
@@ -38,9 +37,8 @@ if ($idHilo > 0) {
                 echo '<p>' . htmlspecialchars($comentario['texto']) . '</p>';
                 echo '</div>';
             }
-            // aquí compruebas si session usuario existe, pero en login.inc.php no creas esa variable, con lo cual nunca entraría en el if
-            // y no se mostraría el formulario de comentarios
-            if (isset($_SESSION['id_usuario'])) {
+
+            if (isset($_SESSION['usuario'])) {
                 echo '<form method="post" action="comentar.php">';
                 echo '<input type="hidden" name="hilo_id" value="' . htmlspecialchars($idHilo) . '">';
                 echo '<textarea name="comentario" required></textarea>';
