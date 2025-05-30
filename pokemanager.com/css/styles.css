@@ -1,0 +1,80 @@
+header {
+  background-color: #a4dba1;
+  padding: 20px;
+}
+
+.contenedor-login {
+  display: flex;
+  justify-content:right;
+}
+.registro-enlace{
+  display:flex;
+  justify-content: right;
+}
+.logo {
+  width: 250px;
+  margin-right: 20px;
+}
+
+.formulario-login {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.formulario-login input {
+  padding: 6px 10px;
+  border: 1px solid #0b7adb;
+  border-radius: 5px;
+}
+
+.formulario-login button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.formulario-login a {
+  font-size: 12px;
+  margin-left: 10px;
+  color: #006400;
+  text-decoration: none;
+}
+
+.formulario-login a:hover {
+  text-decoration: underline;
+}
+
+.formulario-registro{
+  background-color: beige;
+}
+.formulario-registro h2{
+  color:#006400;
+}
+.formulario-registro button{
+  background-color: #4CAF50;
+  border:1px solid #0b7adb;
+  color:white;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.pokemon-item {
+    flex: 0 0 120px;    
+    display: flex;
+    flex-wrap: wrap;      /* Para que si no caben en una fila, pasen a la siguiente */
+    gap: 15px;            /* Espacio entre tarjetas */
+    border-radius: 8px;
+    background: #f9f9f9;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
