@@ -1,4 +1,5 @@
 <?php
+
 $conexion = new mysqli("localhost", "root", "", "pokemanager");
 if ($conexion->connect_error) {
     die("Error de conexión: " . $conexion->connect_error);
@@ -12,8 +13,8 @@ if (!isset($_SESSION["id"])) {
 $idUsuario = $_SESSION["id"];
 $hoy = date("Y-m-d");
 
-// Obtener la última conexión
-$sqlUltima = "SELECT ultima_conexion FROM usuarios WHERE id = ?";
+// Comprobamos si hay que añadir sobres por días sin conexión
+$sqlUltima = "SELECT ultima_conexion, sobres FROM usuarios WHERE id = ?";
 $stmt = $conexion->prepare($sqlUltima);
 $stmt->bind_param("i", $idUsuario);
 $stmt->execute();
@@ -21,22 +22,20 @@ $resultado = $stmt->get_result();
 $fila = $resultado->fetch_assoc();
 
 $ultimaConexion = $fila["ultima_conexion"] ?? $hoy;
+$sobres = (int)$fila["sobres"];
 $diasSinConectar = floor((strtotime($hoy) - strtotime($ultimaConexion)) / (60 * 60 * 24));
-$sobresDisponibles = max(4, $diasSinConectar);
 
-// Inicializamos sobres abiertos hoy en sesión
-if (!isset($_SESSION["sobres_abiertos"])) {
-    $_SESSION["sobres_abiertos"] = 0;
+// Añadimos sobres por días sin conexión (mínimo 1)
+if ($diasSinConectar > 0) {
+    $sobres += max(1, $diasSinConectar);
+    $stmt = $conexion->prepare("UPDATE usuarios SET sobres = ?, ultima_conexion = ? WHERE id = ?");
+    $stmt->bind_param("isi", $sobres, $hoy, $idUsuario);
+    $stmt->execute();
 }
-
-// Actualizamos la última conexión a hoy
-$updateConexion = $conexion->prepare("UPDATE usuarios SET ultima_conexion = ? WHERE id = ?");
-$updateConexion->bind_param("si", $hoy, $idUsuario);
-$updateConexion->execute();
 
 // Si se abre un sobre
 if (isset($_POST["abrir_sobre"])) {
-    if ($_SESSION["sobres_abiertos"] < $sobresDisponibles) {
+    if ($sobres > 0) {
         echo "<h3>Pokémon obtenidos:</h3>";
         for ($i = 0; $i < 5; $i++) {
             $sqlPokemon = "SELECT id, name AS nombre, icon_path AS imagen FROM pokemon ORDER BY RAND() LIMIT 1";
@@ -49,19 +48,22 @@ if (isset($_POST["abrir_sobre"])) {
             $insert->bind_param("iis", $idUsuario, $poke["id"], $hoy);
             $insert->execute();
         }
-        $_SESSION["sobres_abiertos"]++;
+
+        // Restar 1 sobre
+        $sobres--;
+        $stmt = $conexion->prepare("UPDATE usuarios SET sobres = ? WHERE id = ?");
+        $stmt->bind_param("ii", $sobres, $idUsuario);
+        $stmt->execute();
     } else {
         echo "<p>No tienes sobres disponibles.</p>";
     }
 }
 
-// Mostrar botón si quedan sobres por abrir hoy
-$sobresRestantes = $sobresDisponibles - $_SESSION["sobres_abiertos"];
-
-if ($sobresRestantes > 0) {
-    echo "<p>Tienes $sobresRestantes sobres por abrir.</p>";
+// Mostrar botón si quedan sobres
+if ($sobres > 0) {
+    echo "<p>Tienes $sobres sobres disponibles.</p>";
     echo "<form method='post'><button name='abrir_sobre'>Abrir sobre</button></form>";
 } else {
-    echo "<p>No tienes sobres disponibles por hoy.</p>";
+    echo "<p>No tienes sobres disponibles.</p>";
 }
 ?>

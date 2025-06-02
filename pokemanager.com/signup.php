@@ -1,6 +1,5 @@
 <?php
 
-
 $conexion = new mysqli("localhost", "root", "", "pokemanager");
 if ($conexion->connect_error) {
     die("Error de conexión: " . $conexion->connect_error);
@@ -53,20 +52,21 @@ if (!empty($errores)) {
 if (!empty($_FILES["foto"]["name"])) {
     $nombreFoto = basename($_FILES["foto"]["name"]);
     $rutaTemporal = $_FILES["foto"]["tmp_name"];
-    $rutaDestino = "img/img/" . $nombreFoto;
+    $rutaDestino = "img/img/sprites/pngs/" . $nombreFoto;
     move_uploaded_file($rutaTemporal, $rutaDestino);
-    $foto = $rutaDestino;
+    $foto = $nombreFoto; 
 } else {
-    $foto = "img/img/profile_placeholder.png";
+    $foto = "profile_placeholder.png"; 
 }
+
 
 $contrasenyaHash = password_hash($contrasenya, PASSWORD_DEFAULT);
 
 // Insertar en la base de datos
 $sql_insertar = "INSERT INTO usuarios (usuario, email, contrasenya, edad, foto, is_admin)
-                 VALUES (?, ?, ?, ?, ?, 0)";
+                 VALUES (?, ?, ?, ?, ?, 0, ?)";
 $stmt = $conexion->prepare($sql_insertar);
-$stmt->bind_param("sssis", $usuario, $email, $contrasenyaHash, $edad, $foto);
+$stmt->bind_param("sssisi", $usuario, $email, $contrasenyaHash, $edad, $foto);
 $stmt->execute();
 
 // Guardar sesión

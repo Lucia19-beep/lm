@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>PokeManager</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
@@ -17,6 +17,7 @@ include(__DIR__ . "/inc/header.inc.php");
 if (!isset($_SESSION["usuario"])) {
     echo "<h2>¡Bienvenido a PokéManager!</h2>";
     echo "<p>Únete ahora para coleccionar, combatir y convertirte en el mejor entrenador.</p>";
+
 } else {
     // Mostrar menú de pestañas
     echo '
@@ -53,6 +54,6 @@ if (!isset($_SESSION["usuario"])) {
 
 <?php include(__DIR__ . "/inc/footer.inc.php"); ?>
 
-
+<script src="js/header.js"></script>
 </body>
 </html>
