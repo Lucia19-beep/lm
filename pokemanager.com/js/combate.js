@@ -24,17 +24,14 @@ document.getElementById("boton-combatir").addEventListener("click", () => {
   Fairy:    { Fire: 0.5, Fighting: 2, Poison: 0.5, Dragon: 2, Dark: 2, Steel: 0.5 },
 };
 
-function capitalizarTipo(tipo) {
-  return tipo.trim().charAt(0).toUpperCase() + tipo.trim().slice(1).toLowerCase();
-}
 
-  function getMultiplicador(tipoAtacante, tiposDefensor) {
+
+ function getMultiplicador(tipoAtacante, tiposDefensor) {
   let multi = 1;
-  const tipoAtk = capitalizarTipo(tipoAtacante);
   for (let i = 0; i < tiposDefensor.length; i++) {
-    const tipoDef = capitalizarTipo(tiposDefensor[i]);
-    const mod = efectividades[tipoAtk] ? efectividades[tipoAtk][tipoDef] : undefined;
-    console.log(`Atacante: ${tipoAtk}, Defensor: ${tipoDef}, Modificador: ${mod}`);
+    const tipoDef = tiposDefensor[i];
+    const mod = efectividades[tipoAtacante] ? efectividades[tipoAtacante][tipoDef] : undefined;
+    console.log(`Atacante: ${tipoAtacante}, Defensor: ${tipoDef}, Modificador: ${mod}`);
     if (mod !== undefined) {
       multi *= mod;
     }
