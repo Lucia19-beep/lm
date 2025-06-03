@@ -11,15 +11,6 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <?php if (isset($_SESSION['usuario'])): ?>
         <div style="position: relative;">
-            <div class="perfil-hover">
-                <span style="margin-right: 10px;">Hola, <?php echo htmlspecialchars($_SESSION['usuario']); ?></span>
-                <img src="<?php echo htmlspecialchars('img/img/sprites/pngs/' . ($_SESSION['foto'] ?? 'profile_placeholder.png')); ?>"
-                     alt="Foto de perfil"
-                     style="width: 50px; height: 40px; border-radius: 50%;">
-                <div id="logoutMenu" class="logout-menu">
-                    <a href="logout.php">Cerrar sesión</a>
-                </div>
-            </div>
         </div>
     <?php endif; ?>
 </footer>

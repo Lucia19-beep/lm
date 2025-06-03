@@ -80,7 +80,7 @@ document.getElementById("boton-combatir").addEventListener("click", () => {
         }
     }
 
-    function simularCombate(jugador, rival) {
+   function simularCombate(jugador, rival) {
         const log = [];
 
         function danoBase() {
@@ -96,6 +96,8 @@ document.getElementById("boton-combatir").addEventListener("click", () => {
             console.log("Tipos del jugador:", poke1.Type);
             console.log("Tipos del rival:", poke2.Type);
             log.push("🟦 " + poke1.Name + " (HP: " + poke1.HP + ") entra al combate vs 🟥 " + poke2.Name + " (HP: " + poke2.HP + ")");
+            
+            
 
             while (poke1.HP > 0 && poke2.HP > 0) {
                 // Construimos arrays de tipos para ambos Pokémon

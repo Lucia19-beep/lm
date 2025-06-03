@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>PokeManager</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/coleccion.css">
+
 </head>
 <body>
 

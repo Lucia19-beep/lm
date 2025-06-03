@@ -24,7 +24,21 @@ if ($conexion->connect_error) {
 </head>
 <body>
     <header>
-        <img src="\lm\pokemanager.com\img\img\logo.png" alt="Logo del sitio" class="logo" width="250px">
+    <img src="/lm/pokemanager.com/img/img/logo.png" alt="Logo del sitio" class="logo" width="250px">
+
+  <?php if (isset($_SESSION['usuario'])): ?>
+    <div class="saludo-usuario" style="position: relative; float: right; cursor: pointer;">
+        Hola, <?php echo htmlspecialchars($_SESSION['usuario']); ?>
+        <img src="<?php echo htmlspecialchars('/lm/pokemanager.com/img/img/sprites/pngs/' . ($_SESSION['foto'] ?? 'profile_placeholder.png')); ?>"
+             alt="Foto de perfil"
+             style="width: 50px; height: 40px; border-radius: 50%; vertical-align: middle; margin-left: 5px;">
+
+        <div class="logout-menu" style="position: absolute; top: 100%; right: 0; background: #4CAF50; padding: 5px 10px; border-radius: 4px; 
+        white-space: nowrap;">
+            <a href="logout.php" style="color: white; text-decoration: none;">Cerrar sesión</a>
+        </div>
+    </div>
+    <?php else: ?>
         <div class="contenedor-login">
             <form action="/lm/pokemanager.com/login.php" method="post" class="formulario-login">
                 <input type="email" name="usuario" placeholder="Email" required>
@@ -35,7 +49,8 @@ if ($conexion->connect_error) {
         <div class="registro-enlace">
             <a href="#" id="abrir-registro">¿No tienes cuenta? Regístrate</a>
         </div>
-    </header>
+    <?php endif; ?>
+</header>
 
     <dialog id="dialogo-registro">
         <form action="/lm/pokemanager.com/signup.php" method="post" enctype="multipart/form-data" class="formulario-registro">

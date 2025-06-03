@@ -19,10 +19,9 @@ if ($usuario) {
   echo "<p>Edad: {$usuario['edad']}</p>";
   echo "<p>Fecha de registro: {$usuario['fecha_registro']}</p>";
   echo "<p>Última conexión: {$usuario['ultima_conexion']}</p>";
-  echo "<button onclick='eliminarCuenta()'>Eliminar cuenta</button>";
+  echo "<div class='boton-contenedor'><button onclick='eliminarCuenta()'>Eliminar cuenta</button></div>";
 } else {
   echo "Usuario no encontrado.";
 }
 ?>
-
 <script src="js/perfil.js"></script>

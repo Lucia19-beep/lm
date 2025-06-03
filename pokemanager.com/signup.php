@@ -64,9 +64,10 @@ $contrasenyaHash = password_hash($contrasenya, PASSWORD_DEFAULT);
 
 // Insertar en la base de datos
 $sql_insertar = "INSERT INTO usuarios (usuario, email, contrasenya, edad, foto, is_admin)
-                 VALUES (?, ?, ?, ?, ?, 0, ?)";
+                 VALUES (?, ?, ?, ?, ?, ?)";
 $stmt = $conexion->prepare($sql_insertar);
-$stmt->bind_param("sssisi", $usuario, $email, $contrasenyaHash, $edad, $foto);
+$is_admin = 0;
+$stmt->bind_param("sssisi", $usuario, $email, $contrasenyaHash, $edad, $foto,$is_admin);
 $stmt->execute();
 
 // Guardar sesión
