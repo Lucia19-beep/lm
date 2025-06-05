@@ -89,5 +89,5 @@ if ($conexion->connect_error) {
             </div>
         </form>
     </dialog>
-    <script src="js/header.js"></script>
+    <script src="/lm/pokemanager.com/js/header.js"></script>
 </body>
