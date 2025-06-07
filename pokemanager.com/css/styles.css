@@ -69,7 +69,7 @@ header {
 .pokemon-item {
     flex: 0 0 120px;    
     display: flex;
-    flex-wrap: wrap;      /* Para que si no caben en una fila, pasen a la siguiente */
+    flex-wrap: wrap;      
     gap: 15px;          
     border-radius: 8px;
     background: #f9f9f9;

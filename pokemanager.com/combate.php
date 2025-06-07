@@ -5,7 +5,7 @@ header("Content-Type: application/json");
 ini_set("display_errors", 1);
 error_reporting(E_ALL);
 
-// Validación fuerte de sesión
+
 if (!isset($_SESSION["usuario"]) || !isset($_SESSION["id"])) {
     echo json_encode(["error" => "No hay sesión iniciada"]);
     exit;
@@ -19,7 +19,7 @@ if ($conexion->connect_error) {
     exit;
 }
 
-// 1. Obtener 6 Pokémon del jugador
+
 $misPokes = $conexion->prepare("
     SELECT p.id, p.Name, p.`Type 1`, p.`Type 2`, p.HP, p.Attack, p.Defense, p.`Sp. Atk`, p.`Sp. Def`, p.Speed, p.icon_path
     FROM coleccion c
@@ -36,7 +36,7 @@ while ($row = $resultado1->fetch_assoc()) {
     $equipo1[] = $row;
 }
 
-// 2. Buscar un rival
+
 $rival = $conexion->prepare("
     SELECT u.id 
     FROM usuarios u
@@ -55,7 +55,7 @@ if ($resRival->num_rows == 0) {
 }
 $idRival = $resRival->fetch_assoc()["id"];
 
-// 3. Obtener 6 Pokémon del rival
+
 $pokeRival = $conexion->prepare("
     SELECT p.id, p.Name, p.`Type 1`, p.`Type 2`, p.HP, p.Attack, p.Defense, p.`Sp. Atk`, p.`Sp. Def`, p.Speed, p.icon_path
     FROM coleccion c
@@ -71,12 +71,12 @@ $equipo2 = [];
 while ($row = $resultado2->fetch_assoc()) {
     $equipo2[] = $row;
 }
-// 4. Validación final
+
 if (count($equipo1) < 6 || count($equipo2) < 6) {
     echo json_encode(["error" => "Faltan Pokémon para uno de los equipos"]);
     exit;
 }
-// 5. Devolver JSON limpio
+
 echo json_encode([
     "jugador" => $equipo1,
     "rival" => $equipo2
