@@ -2,7 +2,9 @@
 session_start();
 $conexion = new mysqli("localhost", "root", "", "pokemanager");
 if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
+    $_SESSION['error'] = "Error de conexión con la base de datos.";
+    header("Location: error.php");
+    exit;
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -26,14 +28,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 header("Location: index.php");
                 exit;
             } else {
-                $error = "Contraseña incorrecta.";
+                $_SESSION['error'] = "Contraseña incorrecta.";
+                header("Location: error.php");
+                exit;
             }
         } else {
-            $error = "Usuario no encontrado.";
+            $_SESSION['error'] = "Usuario no encontrado.";
+            header("Location: error.php");
+            exit;
         }
+
         $stmt->close();
     } else {
-        $error = "Faltan datos del formulario.";
+        $_SESSION['error'] = "Faltan datos del formulario.";
+        header("Location: error.php");
+        exit;
     }
 }
 

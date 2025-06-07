@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("header.inc.php");
+include("inc/header.inc.php");
 ?>
 
 <main style="background-color: #f9f3e4; min-height: 70vh; display: flex; justify-content: center; align-items: center;">
@@ -18,5 +18,6 @@ include("header.inc.php");
 </main>
 
 <?php
-include("footer.inc.php");
+include("inc/footer.inc.php");
+
 ?>

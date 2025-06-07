@@ -62,7 +62,6 @@ if (!empty($_FILES["foto"]["name"])) {
 
 $contrasenyaHash = password_hash($contrasenya, PASSWORD_DEFAULT);
 
-// Insertar en la base de datos
 $sql_insertar = "INSERT INTO usuarios (usuario, email, contrasenya, edad, foto, is_admin)
                  VALUES (?, ?, ?, ?, ?, ?)";
 $stmt = $conexion->prepare($sql_insertar);
@@ -70,7 +69,7 @@ $is_admin = 0;
 $stmt->bind_param("sssisi", $usuario, $email, $contrasenyaHash, $edad, $foto,$is_admin);
 $stmt->execute();
 
-// Guardar sesión
+
 $_SESSION["id"] = $stmt->insert_id;
 $_SESSION["usuario"] = $usuario;
 $_SESSION["foto"] = $foto;

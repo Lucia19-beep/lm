@@ -21,7 +21,6 @@ if (!isset($_SESSION["usuario"])) {
     echo "<p>Únete ahora para coleccionar, combatir y convertirte en el mejor entrenador.</p>";
 
 } else {
-    // Mostrar menú de pestañas
     echo '
     <nav class="menu-tabs">
         <a href="?pestaña=sobres">Sobres</a>
@@ -40,9 +39,9 @@ if (!isset($_SESSION["usuario"])) {
     $pestaña = $_GET["pestaña"];
     if (in_array($pestaña, $permitidas)) {
         if ($pestaña === "combate") {
-            include("combate.html.php"); // ESTE muestra el HTML del combate
+            include("combate.html.php"); 
         } else {
-            include("$pestaña.php"); // los demás cargan como siempre
+            include("$pestaña.php"); 
         }
     } else {
         echo "<p>Pestaña no válida.</p>";
